@@ -1,0 +1,34 @@
+<project xmlns:jacoco="antlib:org.jacoco.ant" name="JaCoCo"
+default="coverage-report">
+  <import file="build.xml"/>
+  <property name="jacoco.report.dir" value="${build.dir}/report_jacoco"/>
+  <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+    <classpath location="${jacocoant.jar}"/>
+  </taskdef>
+  <target name="fo2pdf-test" depends="compile-java">
+<jacoco:coverage destfile="${jacoco.report.dir}/fop-jacoco-test.exec">
+  <java classname="org.apache.fop.cli.Main" fork="true">
+   <classpath path="${build.classes.dir}" />
+    <arg value="${basedir}/examples/fo/basic/simple.fo"/>
+    <arg value="${basedir}/examples/fo/basic/simple.pdf"/>
+  </java>
+</jacoco:coverage>
+  </target>
+  <target name="coverage-report" depends="fo2pdf-test"
+    description="Runs JaCoCo for a code coverage report">
+    <jacoco:report>
+      <executiondata>
+        <file file="${jacoco.report.dir}/fop-jacoco-test.exec"/>
+      </executiondata>
+      <structure name="Apache FOP">
+        <classfiles>
+          <fileset dir="${build.classes.dir}"/>
+        </classfiles>
+        <sourcefiles>
+          <fileset dir="${src.java.dir}"/>
+        </sourcefiles>
+      </structure>
+      <html destdir="${jacoco.report.dir}"/>
+    </jacoco:report>
+  </target>
+</project>
