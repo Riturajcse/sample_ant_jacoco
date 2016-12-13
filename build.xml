@@ -34,28 +34,9 @@ Example Ant build file that demonstrates how a JaCoCo coverage report can be ite
 <arg value="2 * 3 + 2 * 5"/>
 </java>
 </jacoco:coverage>
-<jacoco:coverage>
-    <java classname="com.mycompany.app.App" fork="true">
-        <classpath>
-            <pathelement location="src/main/java"/>
-        </classpath>
-    </java>
-</jacoco:coverage>
-
-
-<jacoco:coverage>
-    <junit fork="true" forkmode="once">
-        <test name="com.mycompany.app.AppTest"/>
-        <classpath>
-            <pathelement location="src/test/java"/>
-        </classpath>
-    </junit>
-</jacoco:coverage>
-
 </target>
 <target name="report" depends="test">
 <!--  Step 3: Create coverage report  -->
-
 <jacoco:report>
 <!--
  This task needs the collected execution data and ...
